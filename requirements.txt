@@ -1,6 +1,6 @@
-streamlit
-ydata-profiling
-pandas
-numpy
-scikit-learn
-openpyxl
+streamlit>=1.32,<2.0
+ydata-profiling>=4.6,<5.0
+pandas>=2.2,<3.0
+numpy>=1.26,<2.0
+scikit-learn>=1.4,<2.0
+openpyxl>=3.1,<4.0
