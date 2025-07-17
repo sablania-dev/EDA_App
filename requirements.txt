@@ -3,3 +3,4 @@ pandas
 numpy
 scikit-learn
 ydata-profiling==4.6.4
+openpyxl
