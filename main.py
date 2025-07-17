@@ -19,7 +19,7 @@ def about_tab():
 
 *Data Scientist | IIT Delhi BTech 2020 | IIM Calcutta Masters 2026*
 
-Hi! I'm Sarthak Sablania. I created this app to make EDA effortless and accessible for everyone—no coding required!
+Hi! I'm Sarthak Sablania. As a data scientist, I often found it tedious to write code for every small EDA task. That's why I created this app—to make exploratory data analysis easier, faster, and more accessible for everyone.
 
 **Connect with me:**
 - [LinkedIn](https://www.linkedin.com/in/sarthak-sablania/)
@@ -48,8 +48,11 @@ def eda_tab():
             df = pd.read_csv(uploaded_file)
         else:
             df = pd.read_excel(uploaded_file)
-        st.write("### Data Preview", df.head())
+        st.write("### Data Preview (random sample)", df.sample(min(5, len(df)), random_state=42))
         st.write(f"**Shape:** {df.shape}")
+        # Get base name for report file
+        base_name = uploaded_file.name.rsplit('.', 1)[0]
+        report_name = f"{base_name}_EDA.html"
         if st.button("Generate EDA Report"):
             with st.spinner("Generating EDA report. This may take a while for large files..."):
                 profile = ProfileReport(df, explorative=True)
@@ -57,8 +60,7 @@ def eda_tab():
                 st.session_state.profile_html = html
             st.success("Report generation complete!")
         if st.session_state.get("profile_html"):
-            st.markdown("[Open EDA Report in New Tab](data:text/html;base64,{})".format(base64.b64encode(st.session_state.profile_html.encode()).decode()), unsafe_allow_html=True)
-            st.download_button("Download EDA Report as HTML", st.session_state.profile_html, file_name="EDA_Report.html")
+            st.download_button("Download EDA Report as HTML", st.session_state.profile_html, file_name=report_name)
 
 
 def help_tab():
