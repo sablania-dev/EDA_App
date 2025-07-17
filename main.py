@@ -51,18 +51,11 @@ def eda_tab():
         st.write("### Data Preview", df.head())
         st.write(f"**Shape:** {df.shape}")
         if st.button("Generate EDA Report"):
-            progress = st.progress(0, text="Starting report generation...")
-            import time
-            for i in range(1, 6):
-                time.sleep(0.2)
-                progress.progress(i * 20, text=f"Generating report... ({i*20}%)")
-            with st.spinner("Generating report..."):
+            with st.spinner("Generating EDA report. This may take a while for large files..."):
                 profile = ProfileReport(df, explorative=True)
                 html = profile.to_html()
                 st.session_state.profile_html = html
-            progress.progress(100, text="Report generation complete!")
-            time.sleep(0.5)
-            progress.empty()
+            st.success("Report generation complete!")
         if st.session_state.get("profile_html"):
             st.markdown("[Open EDA Report in New Tab](data:text/html;base64,{})".format(base64.b64encode(st.session_state.profile_html.encode()).decode()), unsafe_allow_html=True)
             st.download_button("Download EDA Report as HTML", st.session_state.profile_html, file_name="EDA_Report.html")
